@@ -1,5 +1,7 @@
-import { ExtendedClient } from './ExtendedClient';
+import extClient from './ExtendedClient';
+import { EventHandler } from './handlers/evHandler/eventHandler';
 
-const extClient = new ExtendedClient();
+const evSys = new EventHandler();
 
+evSys.loadEvents();
 extClient.loginOn();

@@ -7,7 +7,7 @@ const flags = IntentsBitField.Flags;
 // getting application id & token from env variables
 const { APP_TOKEN } = process.env;
 
-export class ExtendedClient {
+class ExtendedClient {
   public client: Client;
 
   constructor () {
@@ -30,3 +30,5 @@ export class ExtendedClient {
     this.client.login(APP_TOKEN);
   }
 }
+
+export default new ExtendedClient();

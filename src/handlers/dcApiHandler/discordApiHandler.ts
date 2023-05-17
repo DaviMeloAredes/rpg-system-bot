@@ -32,14 +32,14 @@ export class DiscordApiHandler {
   }
 
   public async post (target: string, data: unknown[]) {
-    const url = `${this.baseUrl}/commands`;
+    const url = `${this.baseUrl}/${target}`;
     const res = await sendRequestToApi('post', url, data);
 
     return res;
   }
 
   public async get (target: string) {
-    const url = `${this.baseUrl}/commands`;
+    const url = `${this.baseUrl}/${target}`;
     const res = await sendRequestToApi('get', url);
 
     return res;

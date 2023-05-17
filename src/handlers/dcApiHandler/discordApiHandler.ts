@@ -19,7 +19,7 @@ async function sendRequestToApi (method: string, url: string, data?: unknown) {
     request.data = data;
   }
 
-  const res = await axios(request);
+  const res: unknown[] = await axios(request);
 
   return res;
 }
@@ -38,9 +38,16 @@ export class DiscordApiHandler {
     return res;
   }
 
-  public async get (target: string) {
+  public async get (target: string): Promise<any[]> {
     const url = `${this.baseUrl}/${target}`;
     const res = await sendRequestToApi('get', url);
+
+    return res;
+  }
+
+  public async delete (target: string, cmdId: string) {
+    const url = `${this.baseUrl}/${target}/${cmdId}`;
+    const res = await sendRequestToApi('delete', url);
 
     return res;
   }

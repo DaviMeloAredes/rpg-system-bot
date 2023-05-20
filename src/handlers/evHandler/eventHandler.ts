@@ -13,7 +13,7 @@ export class EventHandler {
       .catch((e: Error) => {
         switch (e.message) {
           case 'undefined_props':
-            logger.error(e);
+            logger.error(e, 'eventHandler');
             break;
         }
       });

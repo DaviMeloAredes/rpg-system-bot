@@ -1,17 +1,27 @@
 import { Command } from '../../../interfaces/Command';
-import { DiscordApiHandler } from '../../dcApiHandler/discordApiHandler';
+import logger from '../../../utils/logger/logger';
+import dotenv from 'dotenv';
+import { DiscordApiHandler } from '../../dcApiHandler/discordApiHandler'
+
+dotenv.config();
+
+const dcApiController = new DiscordApiHandler();
 
 export default async (files: Command[]) => {
-  const dcApiHandler = new DiscordApiHandler();
-  const appCmds: any[] = await dcApiHandler.get('commands');
+  // for all the files in folder
+  files.forEach(async (f) => {
+    const data = { 
+      name: f.name,
+      desc: f.desc,
+      type: f.type
+    };
 
-  appCmds.forEach(async (cmd: any) => {
-    const filter = files.filter((f) => {
-      return f.name === cmd.name;
-    });
-
-    if (filter.length <= 0) {
-      await dcApiHandler.delete('commands', `${cmd.id}`);
-    }
+    // posting the app cmd to the discord api
+    await dcApiController.post('commands', data)
+      .then(async (res) => {
+        // ... and then logging
+        logger.log(`loaded ${f.name}`);
+      })
+      .catch((e) => logger.error(e, 'watchCommands.ts'));
   });
 }

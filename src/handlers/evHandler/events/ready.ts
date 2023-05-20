@@ -1,11 +1,17 @@
 import { Client } from 'discord.js';
+import { CommandHandler } from '../../cmdHandler/commandHandler';
 import logger from '../../../utils/logger/logger';
 
 module.exports = {
   'id': 'ready',
-  'run': (client: Client) => {
-    const cliUser = client.user!;
+  'run': async (client: Client) => {
+    const clientUser = client.user!;
+    const cmdHandler = new CommandHandler();
 
-    logger.log(`bot started up on ${cliUser.username}#${cliUser.discriminator}`, 'ready.ts');
+    // loading the commands when the bot is ready
+    await cmdHandler.loadCommands()
+      .catch((e) => logger.error(e, 'ready.ts'));
+
+    logger.log(`bot started up on ${clientUser.username}#${clientUser.discriminator}`, 'ready.ts');
   }
 }

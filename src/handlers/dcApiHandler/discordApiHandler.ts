@@ -34,7 +34,7 @@ export class DiscordApiHandler {
 
   public async get (target: string): Promise<AxiosResponse> {
     const res = await axios({
-      url: `https://discord.com/api/v10/applications/${APP_ID}/${target}`,
+      url: `${this.basisUrl}/${target}`,
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
